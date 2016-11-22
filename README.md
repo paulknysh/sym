@@ -16,7 +16,7 @@ Here `expr` is a symbolic expression. It has to return a **non-negative** error 
 
 Just like that (minimizing an error):
 ```mathematica
-Get["C:\\Users\\dell\\Dropbox\\docs\\sym\\sym.m"]
+Get["...\\sym.m"]
 
 time=15; (*time in seconds for running procedure*)
 ncores=4; (*number of cores to be used*)
