@@ -3,7 +3,7 @@
 (*
 INPUT (common names for all modules);
 
-time : time in seconds for running procedure;
+time : time in seconds for running the procedure;
 ncores : number of cores to be used;
 uops : list of unary operations;
 bops : list of binary operations;
