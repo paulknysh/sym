@@ -8,7 +8,7 @@ ncores : number of cores to be used;
 uops : list of unary operations;
 bops : list of binary operations;
 vars : list of variables and constants;
-nops : max number of operations used in expression;
+nops : max number of operations used for building expression;
 *)
 
 
@@ -19,7 +19,7 @@ Runs symbolic Monte Carlo using multiple cores;
 OUTPUT (list);
 
 1st element is the accumulated list of top 100 models;
-2nd element is the accumulated number of iterations;
+2nd element is the total number of iterations;
 *)
 
 Search[time_,ncores_,uops_,bops_,vars_,nops_]:=Module[{arg,res},
@@ -65,7 +65,7 @@ top100=SortBy[Append[Most[top100],{error,expr}],First]]
 
 
 (*
-Generates a random expression from given operations/variables;
+Generates a random expression from given operations and variables/constants;
 
 OUTPUT (expression);
 
