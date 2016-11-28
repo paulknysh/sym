@@ -18,7 +18,7 @@ Runs symbolic Monte Carlo using multiple cores;
 
 OUTPUT (list);
 
-1st element is the accumulated list of top 100 models;
+1st element is the accumulated list of top 100 models and corresponding error values;
 2nd element is the total number of iterations;
 *)
 
@@ -38,7 +38,7 @@ Runs symbolic Monte Carlo on a single core;
 
 OUTPUT (list);
 
-1st element is the list of top 100 models;
+1st element is the list of top 100 models and corresponding error values;
 2nd element is the number of iterations;
 *)
 
