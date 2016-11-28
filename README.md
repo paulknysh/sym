@@ -2,7 +2,7 @@
 
 ## What is this?
 
-A simplistic method for automatic data-driven construction of a symbolic model. User needs to provide an error function and some basic building blocks: operations, variables, constants. A Monte Carlo approach is used: a large number of random models is generated to find the best ones. Procedure scales on multicore CPUs by running several independent Monte Carlo loops in parallel and subsequently accumulating obtained results.
+A simple method for automatic construction of a symbolic model from given data. User needs to provide an error function (of how well a given model fits the data) and some basic building blocks: operations, variables, constants. A Monte Carlo approach is used: a large number of random models is generated to find the best ones. Procedure scales on multicore CPUs by running several independent Monte Carlo loops in parallel and subsequently accumulating obtained results.
 
 ## How do I represent my error function?
 
@@ -18,7 +18,9 @@ Just like that (minimizing an error):
 ```mathematica
 Get["...\\sym.m"]
 
+
 Error[expr_]:=...
+
 
 time=60; (*time in seconds for running the procedure*)
 ncores=4; (*number of cores to be used*)
@@ -27,13 +29,14 @@ bops={Plus,Subtract,Times,Divide}; (*list of binary operations*)
 vars:={x,y,c}; (*list of variables and constants*)
 nops=10; (*max number of operations used for building expression*)
 
+
 output=Search[time,ncores,uops,bops,vars,nops];
-output[[1]]//TableForm (*returns accumulated list of top 100 models*)
+output[[1]]//TableForm (*returns accumulated list of top 100 models and corresponding error values*)
 output[[2]] (*returns total number of iterations*)
 ```
-Constants can be listed as symbols (like `c` in example above) and be determined inside of `Error` function. Alternatively, they can be listed as `RandomInteger[]`/`RandomReal[]` to appear as random values in expression. Finally, no constants is an option too.
+Constants in `vars` can be listed as symbols (like `c` in example above) and be determined inside of `Error` function. Alternatively, they can be listed as `RandomInteger[]`/`RandomReal[]` to appear as random values in expression. Finally, no constants is an option too.
 
-**Important**: All used operations must be protected --- for example it's better to avoid things like `Log`/`Sqrt` of a negative number (dividing by 0 is OK). Also, applying functions like `Exp`/`Power` on large enough values can cause severe memory leaks (Wolfram, wtf?). Therefore, arguments of these functions need to be protected by `Clip` (cuts off large values). For example, instead of listing `Exp` in `uops` user needs to list something like `Exp[Clip[#,{10^-6,10^2},{0,Infinity}]]&`.
+**Important**: All used operations must be protected. For example, it's better to protect arguments of `Log`/`Sqrt` with `Abs` (dividing by 0 is OK). Also, applying functions like `Exp`/`Power` on large (small) enough numbers can cause severe memory leaks (Wolfram, wtf?). Therefore, arguments of these functions need to be protected by `Clip` (cuts off large/small values). For instance, instead of listing `Exp` in `uops` user needs to list something like `Exp[Clip[#,{10^-6,10^2},{0,Infinity}]]&`.
 
 ## Author
 
