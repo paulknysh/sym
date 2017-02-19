@@ -1,20 +1,20 @@
-# sym: A Mathematica package for parallel symbolic regression using Monte Carlo
+# sym: A Mathematica package for generating symbolic models from data
 
 ## What is this?
 
-A simple method for automatic construction of a symbolic model from given data. User needs to provide an error function (of how well a given model fits the data) and some basic building blocks: operations, variables, constants. A Monte Carlo approach is used: a large number of random models is generated to find the best ones. Procedure scales on multicore CPUs by running several independent Monte Carlo loops in parallel and subsequently accumulating obtained results.
+A Monte Carlo search for a symbolic model that fits given data. User needs to provide an error function (of how well a model fits the data) and some basic building blocks: math operations, variables, constants. Procedure scales on multicore CPUs by running several independent Monte Carlo loops in parallel and subsequently accumulating obtained results.
 
 ## How do I represent my error function?
 
-A Mathematica function/module called `Error` needs to be defined by user:
+A Mathematica function/module called `Error` needs to be defined by user. For example, if `data` is a list of points in 2D (`{{0.,1.},{2.,5.},...,{7.,8.}}`) that we want to fit, then the following error function can be defined:
 ```mathematica
-Error[expr_]:=...
+Error[expr_]:=Mean@Table[Abs[data[[i,2]]-expr/.{x->data[[i,1]]}],{i,Length[data]}]
 ```
-`expr` is a symbolic expression. Function has to return a **non-negative** error value that is being **minimized**.
+`expr` is a symbolic model. Symbol `x` that appears in the error function has to be included in list of variables (see example below). `Error` has to return a **non-negative** value that is being **minimized**.
 
 ## How do I run the procedure?
 
-Just like that (minimizing an error):
+Just like that (you need to specify proper full path to a package in `Get[]`):
 ```mathematica
 Get["...\\sym.m"]
 
@@ -26,8 +26,8 @@ time=60; (*time in seconds for running the procedure*)
 ncores=4; (*number of cores to be used*)
 uops={#^2&,Abs[#]^(1/2)&,Log[Abs[#]]&}; (*list of unary operations*)
 bops={Plus,Subtract,Times,Divide}; (*list of binary operations*)
-vars:={x,y,c}; (*list of variables and constants*)
-nops=10; (*max number of operations used for building expression*)
+vars:={x,c}; (*list of variables/constants*)
+nops=10; (*max number of operations used for constructing expression (max size)*)
 
 
 output=Search[time,ncores,uops,bops,vars,nops];
@@ -41,3 +41,5 @@ Constants in `vars` can be listed as symbols (like `c` in example above) and be 
 ## Author
 
 Paul Knysh (paul.knysh@gmail.com)
+
+Feel free to email me if you have any questions or comments.
