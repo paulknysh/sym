@@ -44,5 +44,5 @@ Paul Knysh (paul.knysh@gmail.com)
 Feel free to email me if you have any questions or comments.
 
 <p align="center">
-  <img src="http://i.imgur.com/26KQ5FR.png">
+  <img src="http://i.imgur.com/kuZdzVn.png">
 </p>
