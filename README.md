@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="http://i.imgur.com/26KQ5FR.png">
+</p>
+
 # sym: A Mathematica package for generating symbolic models from data
 
 ## What is this?
