@@ -33,7 +33,7 @@ output[[1]]//TableForm (*returns accumulated list of best 100 models with corres
 output[[2]] (*returns total number of iterations*)
 ```
 **Important:**
-* Some operations must be protected. Applying `Exp` and `Power` on large/small enough numbers, especially when randomly generated model contains nestings like `Exp[Exp[Exp[...]]]`, can cause severe memory leaks (Wolfram, wtf?). Therefore, arguments of these functions need to be protected by `Clip` (cuts off large/small values). For instance, instead of listing `Exp` in `uops` user needs to list `Exp[Clip[#,{10^-6,10^2},{0,Infinity}]]&`. Also, it's better to use `Log[Abs[#]]&` and `Sqrt[Abs[#]]&` instead of just `Log` and `Sqrt` to avoid nasty complex numbers. Arithmetic operations (`Plus`, `Subtract`, `Times`, `Divide`) are safe, dividing by 0 is OK. When adding new operations, make sure they are safe, otherwise use proper safety!
+* Some operations must be protected. Applying `Exp` and `Power` on large/small enough numbers, especially when randomly generated model contains nestings like `Exp[Exp[Exp[...]]]`, can cause severe memory leaks. Therefore, arguments of these functions need to be protected by `Clip` (cuts off large/small values). For instance, instead of listing `Exp` in `uops` user needs to list `Exp[Clip[#,{10^-6,10^2},{0,Infinity}]]&`. Also, it's better to use `Log[Abs[#]]&` and `Sqrt[Abs[#]]&` instead of just `Log` and `Sqrt` to avoid nasty complex numbers. Arithmetic operations (`Plus`, `Subtract`, `Times`, `Divide`) are safe, dividing by 0 is OK. When adding new operations, make sure they are safe, otherwise use proper safety!
 
 ## Author
 
