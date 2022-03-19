@@ -45,9 +45,7 @@ output[[2]] (*returns total number of iterations*)
 
 ## Author
 
-Paul Knysh (paul.knysh@gmail.com)
-
-Feel free to email me if you have any questions or comments.
+Paul Knysh
 
 <p align="center">
   <img src="http://i.imgur.com/kuZdzVn.png">
